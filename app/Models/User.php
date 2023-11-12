@@ -21,7 +21,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
+        'balance',
+        'adress',
+        'status',
     ];
+
+    public function orders(){
+        return $this->belongsToMany(Order::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
