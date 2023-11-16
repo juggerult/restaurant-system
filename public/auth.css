@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    background-image: url('https://restoran5el.com.ua/image/catalog/about/rest_kuhnia_004.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    text-align: center;
+}
+
+.container {
+    background: rgba(34, 34, 34, 0.9);
+    padding: 300px;
+}
+.alert-danger {
+    background: rgba(34, 34, 34, 0.9);
+    padding: 20px;
+    color: #fff;
+    font-weight: 900;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    font-size: 20px;
+    border: 2px solid #64ab8d;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.alert-danger a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.alert-danger:hover {
+    background: #64ab8d;
+}
+
+
+
+h1 {
+    color: #fff;
+    letter-spacing: 5px;
+    font-weight: 900;
+    font-size: 60px;
+    margin-top: 0;
+    margin-bottom: 26px;
+    font-family: 'Syncopate';
+}
+
+p {
+    font-size: 20px;
+    color: #fff;
+    text-transform: none;
+    margin-top: 0;
+    opacity: 0.7;
+    margin-bottom: 60px;
+    font-family: 'Open Sans';
+    letter-spacing: 0;
+    font-style: italic;
+    font-weight: 300;
+}
+
+input{
+color: #f7efef;
+text-transform: uppercase;
+font-weight: 900;
+width: 25%;
+outline: none;
+padding: 12px;
+border: 2px solid #444;
+background: none;
+transition: all 0.5s ease-in-out;
+}
+.old-money-header {
+    background: rgba(34, 34, 34, 0.9);
+    padding: 20px 0;
+    text-align: center;
+}
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+a:hover{
+    color: #d8d0c1;
+}
+nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    font-size: 20px;
+    color: #fff;
+    margin-top: 0;
+    opacity: 0.7;
+    letter-spacing: 0;
+    font-weight: 300;
+    text-decoration: none;
+}
+button {
+    border-color: #fff;
+    color: white;
+    background: none;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12.5px 30px;
+    width: 20%;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 900;
+    border: 2px solid #64ab8d;
+}
+
+button:hover {
+    color: #fff;
+    background: #64ab8d;
+}

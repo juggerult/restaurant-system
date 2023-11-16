@@ -4,6 +4,9 @@ namespace App\Services\Post;
 
 use App\Models\Image;
 use App\Models\Menu;
+use App\Models\Question;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class Service {
 
@@ -26,6 +29,33 @@ class Service {
     public function saveEditDishes(array $data, int $id)
     {
         Menu::findOrFail($id)->update($data);
+    }
+
+    public function saveNewAccount(array $data)
+    {
+        User::create($data);
+    }
+
+    public function sendQuestion(array $data){
+        Question::create($data);
+    }
+
+
+    public function updateEmail($data){
+        Auth::user()->email = $data;
+        Auth::user()->save();
+    }
+    public function updatePhone($data){
+        Auth::user()->phone_number = $data;
+        Auth::user()->save();
+    }
+    public function updateAdress($data){
+        Auth::user()->adress = $data;
+        Auth::user()->save();
+    }
+    public function updatePassword($data){
+        Auth::user()->password = bcrypt($data);
+        Auth::user()->save();
     }
 }
 

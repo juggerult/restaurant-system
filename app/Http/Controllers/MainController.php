@@ -14,6 +14,18 @@ class MainController extends BaseController
         $soups = Menu::where('type_dishes', 'Суп')->get();
         $desserts = Menu::where('type_dishes', 'Десерт')->get();
 
-        return view('userFolder.mainMenu', compact('snacks', 'mains', 'soups', 'desserts'));
+        return view('templates.userHeader').view('userFolder.mainMenu', compact('snacks', 'mains', 'soups', 'desserts')) .view('templates.userFooter');
+    }
+
+    public function sendQuestion(Request $request){
+        $data = $request->validate([
+            'name' => 'required',
+            'phone_number' => 'required',
+            'question' => 'required',
+        ]);
+
+        $this->service->sendQuestion($data);
+
+        return back();
     }
 }

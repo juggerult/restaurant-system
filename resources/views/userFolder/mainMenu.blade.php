@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet" type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Rochester" rel="stylesheet" type='text/css'>
     <link href="{{asset('main.css')}}" rel="stylesheet">
-    <script src="{{asset('script.js')}}"></script>
 </head>
 <body>
     <div class="main-content">
@@ -83,7 +82,7 @@
               </div>
             </div>
           </section>
-          <form action="" method="POST">
+          <form action="{{route('send.question')}}" method="POST">
             @csrf
             <section class="fullwidth-section" id="about-us">
               <div class="section-inner">
@@ -102,12 +101,9 @@
                       <div class="col-md-4">
                         <input type="text" placeholder="Номер телефона" id="phone_number" name="phone_number">
                       </div>
-                      <div class="col-md-4">
-                        <input type="text" placeholder="E-mail" id="email" name="email">
-                      </div>
                     </div>
                     <textarea placeholder="Вопрос" rows="8" id="question" name="question"></textarea>
-                    <button>Отправить</button>
+                    <button type="submit">Отправить</button>
                   </div>
                 </div>
               </div>
