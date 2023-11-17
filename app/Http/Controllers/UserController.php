@@ -57,4 +57,15 @@ class UserController extends BaseController
             'error' => 'Изменения успешно сохранены'
         ]);
     }
+
+    public function replenish(){
+        return view('templates.userHeader') .view('userFolder.replenishBalance');
+    }
+    public function replenishProcces(Request $request){
+        $amoutOfReplenish = $request->all();
+
+        $this->service->replenishMoney($amoutOfReplenish);
+
+        return redirect()->to(route('profile'));
+    }
 }

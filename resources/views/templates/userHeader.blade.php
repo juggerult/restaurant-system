@@ -27,7 +27,8 @@ nav li {
 }
 
 nav a {
-    font-size: 25px;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
     text-decoration: none;
     color: #fff;
 }

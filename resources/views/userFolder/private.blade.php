@@ -210,9 +210,9 @@ td {
         </div>
         <nav class="main-navigation">
             <ul class="main-ul">
-                <li><a href="">Главная</a></li>
+                <li><a href="{{route('main')}}">Главная</a></li>
                 <li><a href="">Запись</a></li>
-                <li><a href="">Выйти</a></li>
+                <li><a href="{{route('logout')}}">Выйти</a></li>
                 <li class="noti">
                     <a>Уведомления</a>
                     <div class="notifications-section" id="notifications">

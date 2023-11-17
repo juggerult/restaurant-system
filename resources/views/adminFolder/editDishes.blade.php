@@ -4,45 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Services</title>
-    <style>
-        /* Стили для формы */
-.admin-form {
-    background-color: #f2f2f2;
-    padding: 20px;
-    border: 1px solid #ddd;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-/* Стили для меток (labels) */
-.admin-form label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-/* Стили для вводных полей (input) */
-.admin-form input {
-    width: 95%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-/* Стили для кнопки */
-.admin-form button {
-    background-color: #0077cc;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-.admin-form button:hover {
-    background-color: #005599;
-}
-
-</style>
+    <link href="{{ asset('adminFunction.css') }}" rel="stylesheet">
 </head>
 <body>
     <main>

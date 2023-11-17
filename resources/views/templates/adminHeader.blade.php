@@ -12,13 +12,13 @@
         <nav>
             <ul>
                 <li><a href="">Главная</a></li>
-                <li><a href="">Сотрудники кухни</a></li>
-                <li><a href="">Сотрудники доставки</a></li>
+                <li><a href="{{route('kitchen.main')}}">Сотрудники кухни</a></li>
+                <li><a href="{{route('delivery.main')}}">Сотрудники доставки</a></li>
                 <li><a href="">Заказы</a></li>
                 <li><a href="{{route('admin.menu')}}">Меню</a></li>
-                <li><a href="">Пользователи</a></li>
-                <li><a href="">Вопросы</a></li>
-                <li><a href=''>Выйти</a></li>
+                <li><a href="{{route('user.main')}}">Пользователи</a></li>
+                <li><a href="{{route('question.main')}}">Вопросы</a></li>
+                <li><a href="{{route('logout')}}">Выйти</a></li>
             </ul>
         </nav>
     </header>
