@@ -85,6 +85,8 @@ Route::prefix('user')->middleware('auth')->group(function () {
 
     Route::get('/order', [UserController::class, 'order'])->name('order');
     Route::post('/pay-order', [UserController::class, 'payOrder'])->name('pay.order');
+
+    Route::get('/post-order/{id}', [UserController::class, 'postOrder'])->name('user.chek');
 });
 
 Route::prefix('kitchen')->middleware(['auth', 'kitchen'])->group(function(){

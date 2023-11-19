@@ -14,11 +14,12 @@ class KitchenController extends BaseController
     public function main(){
         $notDoneOrder = Order::where(function ($query) { $query->where('status_oder', 'В обработке')
                                                                 ->orWhere('status_oder', 'Готовится');})->count();
-        $DoneOrder = Order::where('status_oder', 'Приготовлено')
+        $DoneOrder = Order::where('status_oder', 'Доставлено')
                             ->where('cook_id', Auth::user()->id)->count();
         $allKitchenOrders = Order::where('status_oder', 'В обработке')
                                 ->orWhere('status_oder', 'Готовится')
-                                ->orWhere('status_oder', 'Приготовлено')->get();
+                                ->orWhere('status_oder', 'Приготовлено')
+                                ->orWhere('status_oder', 'Доставлено')->get()->reverse();
         $users = User::all();
 
         return view('templates.kitchenHeader') .view('kitchenFolder.main', compact('notDoneOrder', 'DoneOrder', 'allKitchenOrders', 'users'));
@@ -37,7 +38,7 @@ class KitchenController extends BaseController
                       $query->where('cook_id', Auth::user()->id)
                             ->where('status_oder', 'Готовится');
                   });
-        })->get();
+        })->get()->reverse();
 
 
         return view('templates.kitchenHeader') .view('kitchenFolder.orders', ['orders' => $orders]);
@@ -56,8 +57,7 @@ class KitchenController extends BaseController
 
     public function doneOrders(){
         $orders = Order::where('cook_id', Auth::user()->id)
-                        ->where('status_oder', '!=', 'В обработке')
-                        ->where('status_oder', '!=', 'Готовится')->get();
+                        ->where('status_oder', 'Доставлено')->get()->reverse();
 
         return view('templates.kitchenHeader') .view('kitchenFolder.doneOrders', ['orders' => $orders]);
     }

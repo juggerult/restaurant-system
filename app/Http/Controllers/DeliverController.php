@@ -17,7 +17,7 @@ class DeliverController extends BaseController
                             ->where('provider_id', Auth::user()->id)->count();
         $allDevilerOrders = Order::where('status_oder', 'Приготовлено')
                                 ->orWhere('status_oder', 'Доставляется')
-                                ->orWhere('status_oder', 'Доставлено')->get();
+                                ->orWhere('status_oder', 'Доставлено')->get()->reverse();
         $users = User::all();
 
         return view('templates.deliveryHeader') .view('deliverFolder.main', compact('notDoneOrder', 'DoneOrder', 'allDevilerOrders', 'users'));
@@ -30,7 +30,7 @@ class DeliverController extends BaseController
                       $query->where('provider_id', Auth::user()->id)
                             ->where('status_oder', 'Доставляется');
                   });
-        })->get();
+        })->get()->reverse();
 
         return view('templates.deliveryHeader') .view('deliverFolder.orders', ['orders' => $orders]);
     }
@@ -48,7 +48,7 @@ class DeliverController extends BaseController
 
     public function doneOrders(){
         $orders = Order::where('provider_id', Auth::user()->id)
-                        ->where('status_oder', 'Доставлено')->get();
+                        ->where('status_oder', 'Доставлено')->get()->reverse();
 
         return view('templates.deliveryHeader') .view('deliverFolder.doneOrders', ['orders' => $orders]);
     }

@@ -20,6 +20,8 @@
                 <div class="alert-danger">{{ $message }} </div>
                 @enderror
                 <button type="submit">Войти</button>
+                <p><a href="{{route('registration')}}">Нет аккаунта? - Регистрируй!</a></p>
+                <p><a href="{{route('registration')}}">Забыли пароль? - Восстановите его сейчас же!</a></p>
             </form>
         </div>
     </div>

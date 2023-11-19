@@ -18,6 +18,7 @@
                 <th>Время старта доставки</th>
                 <th>Время окончания доставки</th>
                 <th>Имя заказчика</th>
+                <th>Номер телефона заказчика</th>
                 <th>Функции</th>
             </tr>
         </thead>
@@ -31,6 +32,7 @@
         <td>{{$order->timeAcceptDelivery}}</td>
         <td>{{$order->timeDoneDeveliry}}</td>
         <td>{{\App\Models\User::find($order->users_id)->name }}</td>
+        <td>{{\App\Models\User::find($order->users_id)->phone_number}}</td>
         <td>
             @if($order->status_oder == 'Приготовлено')
             <form method="POST" action="{{route('deviler.employee.order.take', ['id' => $order->id])}}">

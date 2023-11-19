@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Notification;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +13,9 @@ use Illuminate\Support\Facades\Log;
 class UserController extends BaseController
 {
     public function main(){
-        return view('userFolder.Private');
+        $notifications = Notification::where('user_id', Auth::user()->id)->paginate(10)->reverse();
+        $orders = Order::where('users_id', Auth::user()->id)->get()->reverse();
+        return view('userFolder.private', compact('notifications', 'orders'));
     }
 
 
@@ -65,7 +69,7 @@ class UserController extends BaseController
 
 
     public function replenish(){
-        return view('templates.userHeader') .view('userFolder.replenishBalance');
+        return view('templates.userHeader') .view('userFolder.replenishBalance') .view('templates.userFooter');
     }
     public function replenishProcces(Request $request){
         $amoutOfReplenish = $request->all();
@@ -79,7 +83,7 @@ class UserController extends BaseController
     public function order(){
         $menus = Menu::all();
 
-        return view('templates.userHeader') .view('userFolder.order', ['menus' => $menus]);
+        return view('templates.userHeader') .view('userFolder.order', ['menus' => $menus]) .view('templates.userFooter');
     }
     public function payOrder(Request $request){
         $adress = $request->input('adress');
@@ -92,8 +96,9 @@ class UserController extends BaseController
 
         $listOfSelectedDishes = $this->getSelectedServices($request);
 
-        $this->service->newOrder($totalAmount, $listOfSelectedDishes, $adress);
+        $id = ($this->service->newOrder($totalAmount, $listOfSelectedDishes, $adress));
 
+        return redirect()->to(route('user.chek', ['id' => $id]));
     }
     private function getSelectedServices(Request $request){
 
@@ -109,8 +114,11 @@ class UserController extends BaseController
         } else {
             return "Отмена";
         }
+    }
 
-
+    public function postOrder($id){
+        $order = Order::find($id);
+        return view('templates.userHeader') .view('userFolder.afterOrderInfo', ['order' => $order]) .view('templates.userFooter');
     }
 
 

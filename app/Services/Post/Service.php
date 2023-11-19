@@ -129,6 +129,12 @@ class Service {
             'users_id' => Auth::user()->id,
         ]);
         $order->save();
+
+        $user = Auth::user();
+        $user->balance -= $totalAmount;
+        $user->save();
+
+        return $order->id;
     }
 
 

@@ -25,7 +25,18 @@ class AdminController extends BaseController
         $countQuestions = Question::all()->count();
         $countMenuPositions = Menu::all()->count();
 
-        return view('templates.adminHeader') .view('adminFolder.mainMenu', compact('countKitchenMembers', 'countDeliverMembers', 'countQuestions', 'countMenuPositions'));
+        $totalPrices = [];
+        $orderCounts = [];
+        $months = range(1, 12);
+
+        foreach ($months as $month) {
+            $totalPrices[date('F', mktime(0, 0, 0, $month, 1))] = Order::whereMonth('created_at', $month)->sum('price');
+            $orderCounts[date('F', mktime(0, 0, 0, $month, 1))] = Order::whereMonth('created_at', $month)->count();
+        }
+
+
+
+        return view('templates.adminHeader') .view('adminFolder.mainMenu', compact('countKitchenMembers', 'countDeliverMembers', 'countQuestions', 'countMenuPositions', 'totalPrices', 'orderCounts'));
     }
 
 

@@ -211,18 +211,20 @@ td {
         <nav class="main-navigation">
             <ul class="main-ul">
                 <li><a href="{{route('main')}}">Главная</a></li>
-                <li><a href="">Запись</a></li>
+                <li><a href="{{route('order')}}">Заказать</a></li>
                 <li><a href="{{route('logout')}}">Выйти</a></li>
                 <li class="noti">
                     <a>Уведомления</a>
                     <div class="notifications-section" id="notifications">
                         <h2>Уведомления</h2>
                         <ul class="notification-ul">
-
+                            @foreach($notifications as $notificate)
+                            <li>{{$notificate->notification}} /{{ $notificate->created_at->format('d.m H:i') }}</li>
+                            @endforeach
                         </ul>
                     </div>
                 </li>
-                <li><a href="">Баланс {{Auth::user()->balance}}</a></li>
+                <li><a href="{{route('replenish.balance')}}">Баланс {{Auth::user()->balance}}</a></li>
             </ul>
         </nav>
     </header>
@@ -273,14 +275,24 @@ td {
                         <th>Цена</th>
                         <th>Адрес доставки</th>
                         <th>Статус заказа</th>
-                        <th>Время доставки</th>
+                        <th>Время начала готовки</th>
+                        <th>Время начала доставки доставки</th>
+                        <th>Номер телефона доставщика</th>
                     </tr>
                 </thead>
+                @foreach ($orders as $order)
                 <tbody>
                 <tr>
+                    <td>{{$order->meals}}</td>
+                    <td>{{$order->price}}</td>
+                    <td>{{$order->adress}}</td>
+                    <td>{{$order->status_oder}}</td>
+                    <td>{{$order->timeAcceptCook}}</td>
+                    <td>{{$order->timeAcceptDelivery}}</td>
+                    <td>{{\App\Models\User::find($order->provider_id)->phone_number}}</td>
                 </tr>
-
                 </tbody>
+                @endforeach
             </table>
         </section>
     </div>

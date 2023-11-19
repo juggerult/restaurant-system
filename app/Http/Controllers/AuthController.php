@@ -27,7 +27,20 @@ class AuthController extends BaseController
 
         $data = $request->only(['email', 'password']);
         if(Auth::attempt($data)){
-            return redirect()->to(route('main'));
+            switch (Auth::user()->status) {
+                case 'user':
+                    return redirect()->route('main');
+                case 'admin':
+                    return redirect()->route('admin.main');
+                case 'kitchen':
+                    return redirect()->route('kitchen.employee.main');
+                case 'deliver':
+                    return redirect()->route('deliver.employee.main');
+                default:
+                    return redirect()->route('user.login')->withErrors([
+                        'name' => 'Не удалось авторизоваться'
+                    ]);
+            }
         }
 
         return redirect(route('login'))->withErrors([

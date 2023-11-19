@@ -44,7 +44,7 @@ nav a {
             <li><a href="{{route('login')}}">Вход</a></li>
             @else
             <li><a href="{{route('profile')}}">Профиль</a></li>
-            <li><a>Баланс: {{Auth::user()->balance}} грн</a></li>
+            <li><a href="{{route('replenish.balance')}}">Баланс: {{Auth::user()->balance}} грн</a></li>
             <li><a href="{{route('logout')}}" style="color: red;">Выйти</a></li>
             @endif
         </ul>
