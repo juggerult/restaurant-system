@@ -4,8 +4,11 @@ namespace App\Services\Post;
 
 use App\Models\Image;
 use App\Models\Menu;
+use App\Models\Notification;
+use App\Models\Order;
 use App\Models\Question;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class Service {
@@ -115,6 +118,75 @@ class Service {
 
     public function deleteQuestion($id){
         Question::find($id)->delete();
+    }
+
+    public function newOrder($totalAmount, $listOfSelectedDishes, $adress){
+        $order = new Order();
+        $order->fill([
+            'meals' => $listOfSelectedDishes,
+            'price' => $totalAmount,
+            'adress' => $adress,
+            'users_id' => Auth::user()->id,
+        ]);
+        $order->save();
+    }
+
+
+    public function kitchenTakeOrder($id){
+        $order = Order::find($id);
+
+        $order->timeAcceptCook = Carbon::now();
+        $order->cook_id = Auth::user()->id;
+        $order->status_oder = 'Готовится';
+        $order->save();
+
+        $notification = new Notification();
+        $notification->notification = 'Ваш заказ уже готовится!';
+        $notification->user_id = $order->users_id;
+        $notification->save();
+
+    }
+    public function kitchenDoneOrder($id){
+        $order = Order::find($id);
+
+        $order->timeDoneCook = Carbon::now();
+        $order->status_oder = 'Приготовлено';
+        $order->save();
+
+        $notification = New Notification();
+        $notification->notification = 'Ваш заказ уже приготовлен, готовится к отправке';
+        $notification->user_id = $order->users_id;
+        $notification->save();
+    }
+
+    public function deliverTakeOrder($id){
+        $order = Order::find($id);
+
+        $order->timeAcceptDelivery = Carbon::now();
+        $order->status_oder = 'Доставляется';
+        $order->provider_id = Auth::user()->id;
+        $order->save();
+
+        $notification = new Notification();
+        $notification->notification = 'Ваш заказ уже в пути!';
+        $notification->user_id = $order->users_id;
+        $notification->save();
+    }
+    public function deliverDoneOrder($id){
+        $order = Order::find($id);
+
+        $order->timeDoneDeveliry = Carbon::now();
+        $order->status_oder = 'Доставлено';
+        $order->save();
+
+        $notification = new Notification();
+        $notification->notification = 'Ваш заказ успешно доставлен';
+        $notification->user_id = $order->users_id;
+        $notification->save();
+
+        $user = Auth::user();
+        $user->balance += $order->price * 0.25;
+        $user->save();
     }
 }
 

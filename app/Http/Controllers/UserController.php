@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends BaseController
 {
     public function main(){
         return view('userFolder.Private');
     }
+
 
     public function updateEmail(Request $request){
         $data = $request->input('email');
@@ -58,6 +62,8 @@ class UserController extends BaseController
         ]);
     }
 
+
+
     public function replenish(){
         return view('templates.userHeader') .view('userFolder.replenishBalance');
     }
@@ -68,4 +74,44 @@ class UserController extends BaseController
 
         return redirect()->to(route('profile'));
     }
+
+
+    public function order(){
+        $menus = Menu::all();
+
+        return view('templates.userHeader') .view('userFolder.order', ['menus' => $menus]);
+    }
+    public function payOrder(Request $request){
+        $adress = $request->input('adress');
+        $totalAmount = $request->input('total_amount');
+        if(Auth::user()->balance < $totalAmount){
+            return redirect()->to(route('order'))->withErrors([
+                'error' => 'Нам нехватает денег для оформления заказа. Пополните баланс'
+            ]);
+        }
+
+        $listOfSelectedDishes = $this->getSelectedServices($request);
+
+        $this->service->newOrder($totalAmount, $listOfSelectedDishes, $adress);
+
+    }
+    private function getSelectedServices(Request $request){
+
+        $selectedDishes = json_decode($request->input('selected_dishes'), true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            $selectedDishesString = '';
+
+            foreach ($selectedDishes as $dish) {
+                $selectedDishesString .= $dish['name'] .' x'.$dish['quantity'] .' ';
+            }
+
+            return $selectedDishesString;
+        } else {
+            return "Отмена";
+        }
+
+
+    }
+
+
 }

@@ -17,6 +17,7 @@
                 <th>Номер телефона</th>
                 <th>Баланс</th>
                 <th>Количество доставленых блюд</th>
+                <th>Функции</th>
             </tr>
         </thead>
         @foreach($employees as $employee)
@@ -26,7 +27,9 @@
         <td>{{$employee->email}}</td>
         <td>{{$employee->phone_number}}</td>
         <td>{{$employee->balance}}</td>
-        <td>{{$countOfDone}}</td>
+        <td>{{\App\Models\Order::where('status_oder', 'Доставлено')
+            ->where('provider_id',$employee->id)->get()->count()}}
+        </td>
         <td>
             <a class="actionButton" href="{{route('delivery.edit', ['id' => $employee->id])}}">Редактировать</a>
             <form method="POST" action="{{route('delivery.delete', ['id' => $employee->id])}}">

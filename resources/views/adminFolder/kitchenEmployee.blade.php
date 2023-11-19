@@ -16,6 +16,7 @@
                 <th>Почта</th>
                 <th>Номер телефона</th>
                 <th>Количество приготовленых блюд</th>
+                <th>Функции</th>
             </tr>
         </thead>
         @foreach($employees as $employee)
@@ -24,7 +25,9 @@
         <td>{{$employee->name}}</td>
         <td>{{$employee->email}}</td>
         <td>{{$employee->phone_number}}</td>
-        <td>{{$countOfDone}}</td>
+        <td>{{\App\Models\Order::where('status_oder', 'Доставлено')
+            ->where('cook_id',$employee->id)->get()->count()}}
+        </td>
         <td>
             <a class="actionButton" href="{{route('kitchen.edit', ['id' => $employee->id])}}">Редактировать</a>
             <form method="POST" action="{{route('kitchen.delete', ['id' => $employee->id])}}">

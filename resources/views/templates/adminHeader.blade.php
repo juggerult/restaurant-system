@@ -11,10 +11,10 @@
     <header class="admin-header">
         <nav>
             <ul>
-                <li><a href="">Главная</a></li>
+                <li><a href="{{route('admin.main')}}">Главная</a></li>
                 <li><a href="{{route('kitchen.main')}}">Сотрудники кухни</a></li>
                 <li><a href="{{route('delivery.main')}}">Сотрудники доставки</a></li>
-                <li><a href="">Заказы</a></li>
+                <li><a href="{{route('admin.orders')}}">Заказы</a></li>
                 <li><a href="{{route('admin.menu')}}">Меню</a></li>
                 <li><a href="{{route('user.main')}}">Пользователи</a></li>
                 <li><a href="{{route('question.main')}}">Вопросы</a></li>

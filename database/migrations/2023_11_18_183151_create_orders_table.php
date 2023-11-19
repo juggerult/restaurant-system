@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->text('meals');
             $table->integer('price');
@@ -21,12 +21,12 @@ return new class extends Migration
 
             $table->time('timeAcceptCook')->nullable();
             $table->time('timeDoneCook')->nullable();
-            $table->foreignId('cook_id')
+            $table->foreignId('cook_id')->nullable()
                   ->constrained('users')->onDelete('cascade');
 
             $table->time('timeAcceptDelivery')->nullable();
             $table->time('timeDoneDeveliry')->nullable();
-            $table->foreignId('provider_id')
+            $table->foreignId('provider_id')->nullable()
                   ->constrained('users')->onDelete('cascade');
 
 
@@ -40,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('orders');
     }
 };

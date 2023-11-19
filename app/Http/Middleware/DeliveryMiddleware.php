@@ -16,7 +16,7 @@ class DeliveryMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->status != 'admin' || Auth::user()->status != 'deliver'){
+        if(Auth::user()->status != 'admin' && Auth::user()->status != 'deliver'){
             return redirect()->to(abort(404));
         }
         return $next($request);

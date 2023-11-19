@@ -38,12 +38,12 @@ nav a {
 <header>
     <nav>
         <ul>
-            <li><a href="#">Главная</a></li>
-            <li><a href="#">Заказать</a></li>
+            <li><a href="{{route('main')}}">Главная</a></li>
+            <li><a href="{{route('order')}}">Заказать</a></li>
             @if(!Auth::check())
             <li><a href="{{route('login')}}">Вход</a></li>
             @else
-            <li><a href="#">Профиль</a></li>
+            <li><a href="{{route('profile')}}">Профиль</a></li>
             <li><a>Баланс: {{Auth::user()->balance}} грн</a></li>
             <li><a href="{{route('logout')}}" style="color: red;">Выйти</a></li>
             @endif

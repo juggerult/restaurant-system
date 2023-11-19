@@ -19,7 +19,14 @@ class AdminController extends BaseController
 
         return view('templates.adminHeader') . view('adminFolder.menu', ['menus' => $menu]);
     }
+    public function main(){
+        $countKitchenMembers = User::where('status', 'kitchen')->count();
+        $countDeliverMembers = User::where('status', 'deliver')->count();
+        $countQuestions = Question::all()->count();
+        $countMenuPositions = Menu::all()->count();
 
+        return view('templates.adminHeader') .view('adminFolder.mainMenu', compact('countKitchenMembers', 'countDeliverMembers', 'countQuestions', 'countMenuPositions'));
+    }
 
 
     public function addDishes(){
@@ -186,5 +193,11 @@ class AdminController extends BaseController
         $this->service->deleteQuestion($id);
 
         return back();
+    }
+
+    public function orders(){
+        $orders = Order::all();
+
+        return view('templates.adminHeader') .view('adminFolder.orders', ['orders' => $orders]);
     }
 }

@@ -16,7 +16,7 @@ class KitchenMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->status != 'admin' || Auth::user()->status != 'kitchen'){
+        if(Auth::user()->status != 'admin' && Auth::user()->status != 'kitchen'){
             return redirect()->to(abort(404));
         }
         return $next($request);
