@@ -6,6 +6,7 @@ use App\Http\Controllers\DeliverController;
 use App\Http\Controllers\KitchenController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Psy\TabCompletion\AutoCompleter;
 
@@ -70,6 +71,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/questions', [AdminController::class, 'question'])->name('question.main');
     Route::post('/delete-question/{id}', [AdminController::class, 'deleteQuestion'])->name('question.delete');
 
+    Route::get('/reviews', [AdminController::class, 'reviews'])->name('admin.reviews');
+    Route::post('/review-delete/{id}', [AdminController::class, "reviewDelete"])->name('admin.review.delete');
+
 });
 
 Route::prefix('user')->middleware('auth')->group(function () {
@@ -87,6 +91,7 @@ Route::prefix('user')->middleware('auth')->group(function () {
     Route::post('/pay-order', [UserController::class, 'payOrder'])->name('pay.order');
 
     Route::get('/post-order/{id}', [UserController::class, 'postOrder'])->name('user.chek');
+    Route::post('/review-send', [UserController::class, 'review'])->name('review');
 });
 
 Route::prefix('kitchen')->middleware(['auth', 'kitchen'])->group(function(){

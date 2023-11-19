@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Question;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -210,5 +211,16 @@ class AdminController extends BaseController
         $orders = Order::all();
 
         return view('templates.adminHeader') .view('adminFolder.orders', ['orders' => $orders]);
+    }
+
+    public function reviews(){
+        $reviews = Review::all();
+
+        return view('templates.adminHeader') .view('adminFolder.reviews', ['reviews' => $reviews]);
+    }
+    public function reviewDelete($id){
+        $this->service->reviewDelete($id);
+
+        return back();
     }
 }

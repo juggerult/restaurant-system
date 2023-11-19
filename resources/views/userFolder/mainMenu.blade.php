@@ -77,7 +77,14 @@
                     <p>10+ Лет опыта</p>
                     <p>50+ Заказов выполняется и доставляется ежедневно</p>
                     <p>1000+ Счастливых клиентов</p>
-                  </div>
+                        <h1>Reviews</h1>
+                        <div style="display: inline-flex;">
+                            @foreach ($reviews as $review)
+                            <div class="review" style="padding-left: 50px; text-align: center;">
+                                <p>Отзыв от {{\App\Models\User::find($review->user_id)->name}}<br>{{$review->review}} Оценка {{$review->rating}} / 5</p>
+                            </div>
+                            @endforeach
+                        </div>
                 </div>
               </div>
             </div>

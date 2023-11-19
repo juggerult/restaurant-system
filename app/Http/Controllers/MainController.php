@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class MainController extends BaseController
@@ -13,8 +14,8 @@ class MainController extends BaseController
         $mains = Menu::where('type_dishes', 'Основное')->get();
         $soups = Menu::where('type_dishes', 'Суп')->get();
         $desserts = Menu::where('type_dishes', 'Десерт')->get();
-
-        return view('templates.userHeader').view('userFolder.mainMenu', compact('snacks', 'mains', 'soups', 'desserts')) .view('templates.userFooter');
+        $reviews = Review::where('rating', '>=', 4)->paginate(5);
+        return view('templates.userHeader').view('userFolder.mainMenu', compact('snacks', 'mains', 'soups', 'desserts', 'reviews')) .view('templates.userFooter');
     }
 
     public function sendQuestion(Request $request){

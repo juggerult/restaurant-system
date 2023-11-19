@@ -121,5 +121,15 @@ class UserController extends BaseController
         return view('templates.userHeader') .view('userFolder.afterOrderInfo', ['order' => $order]) .view('templates.userFooter');
     }
 
+    public function review(Request $request){
+        $data = $request->validate([
+            'review' => 'required',
+            'rating' => 'required',
+            'user_id' => '0',
+        ]);
 
+        $this->service->addReview($data);
+
+        return redirect()->to(route('main'));
+    }
 }

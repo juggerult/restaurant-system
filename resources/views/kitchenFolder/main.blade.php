@@ -27,11 +27,9 @@
         <td>{{$allKitchenOrder->status_oder}}</td>
         <td>{{$allKitchenOrder->timeAcceptCook}}</td>
         <td>{{$allKitchenOrder->timeDoneCook}}</td>
-        <td> @if($user = \App\Models\User::find($allKitchenOrder->cook_id))
-            {{ $user->name }}
-        @else
-            В ожидании
-        @endif</td>
+        <td>
+            {{ optional(\App\Models\User::find($allKitchenOrder->cook_id))->name ?? 'В ожидании' }}
+        </td>
         </tr>
         </tbody>
         @endforeach

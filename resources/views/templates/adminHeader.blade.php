@@ -17,6 +17,7 @@
                 <li><a href="{{route('admin.orders')}}">Заказы</a></li>
                 <li><a href="{{route('admin.menu')}}">Меню</a></li>
                 <li><a href="{{route('user.main')}}">Пользователи</a></li>
+                <li><a href="{{route('admin.reviews')}}">Отзывы</a></li>
                 <li><a href="{{route('question.main')}}">Вопросы</a></li>
                 <li><a href="{{route('logout')}}">Выйти</a></li>
             </ul>

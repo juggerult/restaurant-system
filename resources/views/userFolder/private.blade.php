@@ -289,7 +289,9 @@ td {
                     <td>{{$order->status_oder}}</td>
                     <td>{{$order->timeAcceptCook}}</td>
                     <td>{{$order->timeAcceptDelivery}}</td>
-                    <td>{{\App\Models\User::find($order->provider_id)->phone_number}}</td>
+                    <td>
+                        {{ optional(\App\Models\User::find($order->provider_id))->phone_number ?? 'В ожидании.' }}
+                    </td>
                 </tr>
                 </tbody>
                 @endforeach

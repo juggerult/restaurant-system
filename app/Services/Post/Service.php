@@ -7,6 +7,7 @@ use App\Models\Menu;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Question;
+use App\Models\Review;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -193,6 +194,15 @@ class Service {
         $user = Auth::user();
         $user->balance += $order->price * 0.25;
         $user->save();
+    }
+
+
+    public function addReview($data){
+        $data['user_id'] = Auth::user()->id;
+        Review::create($data);
+    }
+    public function reviewDelete($id){
+        Review::find($id)->delete();
     }
 }
 
