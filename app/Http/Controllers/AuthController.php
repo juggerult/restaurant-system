@@ -27,6 +27,7 @@ class AuthController extends BaseController
 
         $data = $request->only(['email', 'password']);
         if(Auth::attempt($data)){
+            if(Auth::user()->isActive){
             switch (Auth::user()->status) {
                 case 'user':
                     return redirect()->route('main');
@@ -38,8 +39,15 @@ class AuthController extends BaseController
                     return redirect()->route('deliver.employee.main');
                 default:
                     return redirect()->route('user.login')->withErrors([
-                        'name' => 'Не удалось авторизоваться'
+                        'error' => 'Не удалось авторизоваться'
                     ]);
+            }
+            }else{
+                Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'error' => 'Ваша учетная запись заблокирована'
+                ]);
+
             }
         }
 
