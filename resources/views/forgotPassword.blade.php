@@ -9,19 +9,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>Login</h1>
-        <p>Введите свои учетные данные</p>
+        <h1>Reset Password</h1>
+        <p>Введите почту которая была привязана к аккаунта</p>
         <div>
-            <form action="{{route('login.post')}}" method="POST">
+            <form action="{{route('user.email.check')}}" method="POST">
                 @csrf
                 <input type="text" placeholder="Почта" id="email" name="email"><br>
-                <input type="password" placeholder="Пароль" id="password" name="password">
                 @error('error')
                 <div class="alert-danger">{{ $message }} </div>
                 @enderror
-                <button type="submit">Войти</button>
-                <p><a href="{{route('registration')}}">Нет аккаунта? - Регистрируй!</a></p>
-                <p><a href="{{route('user.forgot.password')}}">Забыли пароль? - Восстановите его сейчас же!</a></p>
+                <button type="submit">Продолжить</button>
             </form>
         </div>
     </div>

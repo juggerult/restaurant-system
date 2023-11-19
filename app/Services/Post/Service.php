@@ -204,6 +204,32 @@ class Service {
     public function reviewDelete($id){
         Review::find($id)->delete();
     }
+
+
+    public function checkEmail($email){
+        if(User::where('email', $email)->exists()){
+            return true;
+        }
+
+        return false;
+    }
+    public function temporaryPassword($length = 12){
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $password = '';
+
+        $charactersLength = strlen($characters);
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $password;
+    }
+    public function newPassword($password, $email){
+        $user = User::where('email', $email)->first();
+        $user->password = $password;
+        $user->save();
+    }
+
 }
 
 

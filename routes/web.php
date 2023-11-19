@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeliverController;
 use App\Http\Controllers\KitchenController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -32,6 +33,11 @@ Route::group([], function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::post('/send-question', [MainController::class, 'sendQuestion'])->name('send.question');
+
+    Route::get('/forgot-passord', [MailController::class, 'forgot'])->name('user.forgot.password');
+    Route::post('/check-email', [MailController::class, 'checkEmail'])->name('user.email.check');
+    Route::get('/send-mail', [MailController::class, 'sendMail']);
+
 });
 
 
