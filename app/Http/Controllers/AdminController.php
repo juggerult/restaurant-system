@@ -44,7 +44,9 @@ class AdminController extends BaseController
     public function addDishes(){
         return view('templates.adminHeader') .view('adminFolder.addMenuPosition');
     }
-    public function saveDishes(Request $request){
+
+    private function requestDishesForm(Request $request, $type){
+
         $data = $request->validate([
             'name' => 'required',
             'weight' => 'required',
@@ -58,6 +60,14 @@ class AdminController extends BaseController
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
+        return $type == 1 ? $data : $imageData;
+
+    }
+
+    public function saveDishes(Request $request){
+        $data = $this->requestDishesForm($request, 1);
+        $imageData = $this->requestDishesForm($request, 2);
+
         $this->service->addImageDishesToMenu($imageData, $this->service->addDishesToMenu($data));
 
         return redirect()->to(route('admin.menu'));
@@ -68,13 +78,7 @@ class AdminController extends BaseController
         return view('templates.adminHeader') .view('adminFolder.editDishes', ['dish' => $dish]);
     }
     public function saveEditDishes(Request $request ,$id){
-        $data = $request->validate([
-            'name' => 'required',
-            'weight' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'type_dishes' => 'required'
-        ]);
+        $data = $this->requestDishesForm($request, 1);
 
         $this->service->saveEditDishes($data, $id);
 
@@ -86,18 +90,6 @@ class AdminController extends BaseController
 
     public function addKitchen(){
         return view('templates.adminHeader') .view('adminFolder.addKitchenEmployee');
-    }
-    public function saveAddKitchen(Request $request){
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone_number' => 'required',
-            'password' => 'required',
-        ]);
-
-        $this->service->saveNewKitchen($data);
-
-        return redirect()->to(route('kitchen.main'));
     }
     public function kitchen(){
         $employees = User::where('status', 'kitchen')->get();
@@ -111,7 +103,23 @@ class AdminController extends BaseController
 
         return view('templates.adminHeader') .view('adminFolder.editKitchen', ['user' => $user]);
     }
+
+    public function saveAddKitchen(Request $request){
+        $data = $this->requestKitchenForm($request);
+
+        $this->service->saveNewKitchen($data);
+
+        return redirect()->to(route('kitchen.main'));
+    }
     public function saveEditKitchen(Request $request, $id){
+        $data = $this->requestKitchenForm($request);
+
+        $this->service->saveEditKitchen($data, $id);
+
+        return redirect()->to(route('kitchen.main'));
+    }
+
+    private function requestKitchenForm(Request $request){
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required',
@@ -119,10 +127,9 @@ class AdminController extends BaseController
             'password' => 'required',
         ]);
 
-        $this->service->saveEditKitchen($data, $id);
-
-        return redirect()->to(route('kitchen.main'));
+        return $data;
     }
+
     public function deleteKitchen($id){
         $this->service->deleteKitchen($id);
 
@@ -142,25 +149,29 @@ class AdminController extends BaseController
     public function addProvider(){
         return view('templates.adminHeader') .view('adminFolder.addDeliverEmployee');
     }
-    public function saveAddProvider(Request $request){
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone_number' => 'required',
-            'password' => 'required',
-        ]);
 
-        $this->service->saveNewProvider($data);
-
-        return redirect()->to(route('delivery.main'));
-    }
 
     public function editDelivery($id){
         $user = User::find($id);
 
         return view('templates.adminHeader') .view('adminFolder.editDeliverEmployee', ['user' => $user]);
     }
+    public function saveAddProvider(Request $request){
+        $data = $this->requestDeliveryForm($request);
+
+        $this->service->saveNewProvider($data);
+
+        return redirect()->to(route('delivery.main'));
+    }
     public function saveEditDelivery(Request $request, $id){
+        $data = $this->requestDeliveryForm($request);
+
+        $this->service->saveEditProvider($data, $id);
+
+        return redirect()->to(route('delivery.main'));
+    }
+
+    private function requestDeliveryForm(Request $request){
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required',
@@ -168,10 +179,9 @@ class AdminController extends BaseController
             'password' => 'required',
         ]);
 
-        $this->service->saveEditProvider($data, $id);
-
-        return redirect()->to(route('delivery.main'));
+        return $data;
     }
+
     public function deleteDelivery($id){
         $this->service->deleteProvider($id);
 
